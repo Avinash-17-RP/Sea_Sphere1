@@ -9,16 +9,39 @@ const PersonalHome = () => {
     const { user } = useUser();
     const [newPostContent, setNewPostContent] = useState('');
     const [visibility, setVisibility] = useState('public');
+    const [mediaFiles, setMediaFiles] = useState([]);
 
     const userName = user?.name || 'User';
     const userAvatar = user?.avatar || 'U';
 
     const handlePostSubmit = () => {
         if (newPostContent.trim()) {
-            addPost(newPostContent, userName, userAvatar, 'Member', visibility);
+            addPost(newPostContent, userName, userAvatar, 'Member', visibility, mediaFiles);
             setNewPostContent('');
             setVisibility('public');
+            setMediaFiles([]);
         }
+    };
+
+    const handleMediaSelect = (event) => {
+        const files = Array.from(event.target.files || []);
+        if (!files.length) return;
+
+        const mapped = files.map((file) => ({
+            name: file.name,
+            url: URL.createObjectURL(file),
+            type: file.type.startsWith('video') ? 'video' : 'image'
+        }));
+        setMediaFiles(mapped);
+    };
+
+    const openFilePicker = () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*,video/*';
+        input.multiple = true;
+        input.onchange = handleMediaSelect;
+        input.click();
     };
 
     return (
@@ -49,7 +72,7 @@ const PersonalHome = () => {
                         </div>
                         <div className="post-actions-row">
                             <div className="post-media-options">
-                                <button className="btn-media"><i className="fa-solid fa-image"></i> Media</button>
+                                    <button className="btn-media" type="button" onClick={openFilePicker}><i className="fa-solid fa-image"></i> Media</button>
                                 <select 
                                     className="visibility-dropdown-mini"
                                     value={visibility}
@@ -79,7 +102,7 @@ const PersonalHome = () => {
     );
 };
 
-const PostCard = ({ author, avatar, role, time, content, likes, comments, visibility }) => (
+const PostCard = ({ author, avatar, role, time, content, likes, comments, visibility, media }) => (
     <div className="glass-card post-card fade-in">
         <div className="post-header">
             <div className="user-avatar">{avatar}</div>
@@ -96,6 +119,20 @@ const PostCard = ({ author, avatar, role, time, content, likes, comments, visibi
         </div>
         <div className="post-content">
             {content}
+            {Array.isArray(media) && media.length > 0 && (
+                <div className="post-media-grid">
+                    {media.map((item, idx) => (
+                        <div className="post-media-item" key={`${item.url}-${idx}`}>
+                            {item.type === 'video' ? (
+                                <video src={item.url} controls className="post-media-thumb" />
+                            ) : (
+                                <img src={item.url} alt={item.name} className="post-media-thumb" />
+                            )}
+                            <div className="post-media-name">{item.name}</div>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
         <div className="post-footer">
             <button className="btn-post-action"><i className="fa-regular fa-heart"></i> {likes}</button>

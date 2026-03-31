@@ -19,7 +19,7 @@ export const PostsProvider = ({ children }) => {
         localStorage.setItem('seasphere_posts', JSON.stringify(posts));
     }, [posts]);
 
-    const addPost = (content, author = 'User', avatar = 'U', role = 'Member', visibility = 'public') => {
+    const addPost = (content, author = 'User', avatar = 'U', role = 'Member', visibility = 'public', mediaItems = []) => {
         const newPost = {
             id: posts.length + 1,
             author: author,
@@ -27,6 +27,7 @@ export const PostsProvider = ({ children }) => {
             role: role,
             time: "Just now",
             content: content,
+            media: mediaItems,
             visibility: visibility,
             likes: 0,
             comments: 0

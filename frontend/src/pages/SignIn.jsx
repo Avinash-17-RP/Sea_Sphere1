@@ -5,6 +5,7 @@ import { supabase, GOOGLE_CLIENT_ID } from '../lib/supabase';
 
 const SignIn = () => {
     const [accountType, setAccountType] = useState('personal');
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -37,6 +38,7 @@ const SignIn = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setUserInfo({
+            name: name || 'User',
             email: email,
             accountType: accountType
         });
@@ -79,6 +81,18 @@ const SignIn = () => {
                     </div>
 
                     <form onSubmit={handleSubmit}>
+
+                        <div className="form-group">
+                            <input 
+                                type="text" 
+                                className="form-input" 
+                                placeholder=" " 
+                                required 
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                            />
+                            <label className="form-label">Full Name</label>
+                        </div>
 
                         <div className="form-group">
                             <input 

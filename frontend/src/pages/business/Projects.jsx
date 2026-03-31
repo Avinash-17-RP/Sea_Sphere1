@@ -151,12 +151,12 @@ const Projects = () => {
                                 <div style={{ marginBottom: '15px' }}>
                                     <label style={{ display: 'block', marginBottom: '5px' }}>Project Name</label>
                                     <input type="text" required value={newProject.name} onChange={(e) => setNewProject({...newProject, name: e.target.value})}
-                                        style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.05)', color: 'white' }} />
+                                        style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid rgba(0,0,0,0.15)', background: '#ffffff', color: '#000000' }} />
                                 </div>
                                 <div style={{ marginBottom: '15px' }}>
                                     <label style={{ display: 'block', marginBottom: '5px' }}>Description</label>
                                     <textarea value={newProject.description} onChange={(e) => setNewProject({...newProject, description: e.target.value})}
-                                        style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.05)', color: 'white', height: '80px' }} />
+                                        style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid rgba(0,0,0,0.15)', background: '#ffffff', color: '#000000', height: '80px' }} />
                                 </div>
                                 <div style={{ marginBottom: '15px' }}>
                                     <label style={{ display: 'block', marginBottom: '5px' }}>Category</label>
